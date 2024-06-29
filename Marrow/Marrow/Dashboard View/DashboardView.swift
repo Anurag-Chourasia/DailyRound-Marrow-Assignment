@@ -73,7 +73,7 @@ struct DashboardView: View {
                             .padding(.trailing,30)
                             
                             Button(action: {
-                                // remove userdefault and also make userentity data isSuccessfullyLogin = false
+    
                                 isLoading = true
                                 logOutAlert = true
                             }) {
@@ -320,7 +320,7 @@ struct DashboardView: View {
         
         if searchBook.count >= 3 && !isBookLoading{
             isBookLoading = true
-            offset = 0 // Reset offset when performing a new search
+            offset = 0
             fetchBooks(title: searchBook.lowercased(), offset: offset)
         } else {
             if !isBookLoading && !isLoadingMore{
@@ -366,10 +366,8 @@ struct DashboardView: View {
         let screenHeight = UIScreen.main.bounds.height
         let triggerOffset = contentHeight - offsetY - screenHeight
         
-        if triggerOffset <= 0 { // Check if triggerOffset is less than or equal to 0 for exact bottom
-            // Simulate loading delay
+        if triggerOffset <= 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                // Replace with actual data fetching logic
                 loadMoreBooks()
             }
         }
@@ -377,7 +375,7 @@ struct DashboardView: View {
     
     private func loadMoreBooks() {
         isLoadingMore = true
-        offset += 10 // Increment offset for pagination
+        offset += 10 
         fetchBooks(title: searchBook.lowercased(), offset: offset)
     }
     

@@ -330,7 +330,6 @@ class PersistenceController {
     }
 
     private func updateBooks(_ books: [Book]) {
-        // Update the view model property or state to notify the view of the update
         self.updatedBooks = books
     }
 }

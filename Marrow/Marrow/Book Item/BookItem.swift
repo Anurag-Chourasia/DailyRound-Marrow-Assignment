@@ -35,25 +35,17 @@ struct BookItem: View {
                             .onSuccess { result in
                                 let imageSize = result.image.size
                                 if imageSize.width == 0 && imageSize.height == 0 {
-                                    //                                        print("The downloaded image has no size (width and height are zero).")
                                     self.isLoading = true
-                                    //                                        print("onSuccess")
-                                    //                                        print(url ?? "")
                                 } else {
                                     if imageSize.width >= 100 && imageSize.height >= 100{
                                         self.isLoading = false
                                     }else{
                                         self.isLoading = true
-                                        //                                            print("onSuccess")
-                                        //                                            print(url ?? "")
                                     }
-                                    //                                        print("The downloaded image size: \(imageSize.width) x \(imageSize.height)")
                                 }
                             }
                             .onFailure { error in
                                 self.isLoading = false
-//                                print("onFailure")
-//                                print(url ?? "")
                             }
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -108,8 +100,6 @@ struct BookItem: View {
                                     self.authorNames.append(".")
                                 }
                             }
-//                            print(authorNames)
-//                            print(authorNames.trimmingCharacters(in: .whitespacesAndNewlines).count)
                         }
                     
                     HStack(spacing:0){

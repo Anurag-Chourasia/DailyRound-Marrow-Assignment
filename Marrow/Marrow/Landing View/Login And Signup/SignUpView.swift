@@ -260,7 +260,7 @@ struct SignUpView: View {
 
                     
                     isLoading = false
-                    
+               //MARK: for clearing database
 //                                    persistenceController.deleteAllData(entity: "CountryEntity")
 //                                    persistenceController.deleteAllData(entity: "DatumEntity")
 //                                    persistenceController.deleteAllData(entity: "RegionEntity")
@@ -286,13 +286,11 @@ struct SignUpView: View {
                                     
                                     self.selectedCountryIndex = self.countries.firstIndex(of: response.country) ?? 0
                                     
-//                                    print(selectedCountryIndex)
                                     
                                     if let countryModel = fetchedCountries{
                                         persistenceController.saveCountryModel(countryModel)
                                         if !countries.isEmpty{
                                             let name = countries[selectedCountryIndex]
-//                                            print(name)
                                             persistenceController.saveDefaultCountryName(selectedCountryName: name)
                                         }
                                        
