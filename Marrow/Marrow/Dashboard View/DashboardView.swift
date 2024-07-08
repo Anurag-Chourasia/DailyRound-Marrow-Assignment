@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import Combine
 
 struct DashboardView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -106,15 +107,7 @@ struct DashboardView: View {
                                 .padding(.leading, 19)
                                 .padding(.trailing, 19)
                             
-                            TextField("", text: $searchBook)
-                                .padding(.trailing, 21)
-                                .placeholder(when: searchBook.isEmpty) {
-                                    HStack(spacing:0) {
-                                        Text("Search for Books")
-                                            .foregroundColor(Color(UIColor(hex: "#242E3D")))
-                                            .font(.title3)
-                                    }
-                                }
+                            TextFieldWithDebounce(debouncedText: $searchBook)
                                 .onChange(of: searchBook){newText in
                                     if isBookLoading || isLoadingMore{
                                         
@@ -384,4 +377,42 @@ struct DashboardView: View {
 
 #Preview {
     DashboardView(isLoggedIn: .constant(true))
+}
+
+class TextFieldObserver : ObservableObject {
+    @Published var debouncedText = ""
+    @Published var searchText = ""
+    
+    private var cancellable = Set<AnyCancellable>()
+    
+    init() {
+        $searchText
+            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] t in
+                self?.debouncedText = t
+            } )
+            .store(in: &cancellable)
+    }
+}
+struct TextFieldWithDebounce : View {
+    @Binding var debouncedText : String
+    @StateObject private var textObserver = TextFieldObserver()
+    
+    var body: some View {
+    
+        VStack {
+                
+            TextField("", text: $textObserver.searchText)
+                .padding(.trailing, 21)
+                .placeholder(when: textObserver.searchText.isEmpty) {
+                    HStack(spacing:0) {
+                        Text("Search for Books")
+                            .foregroundColor(Color(UIColor(hex: "#242E3D")))
+                            .font(.title3)
+                    }
+                }
+        }.onReceive(textObserver.$debouncedText) { (val) in
+            debouncedText = val
+        }
+    }
 }
