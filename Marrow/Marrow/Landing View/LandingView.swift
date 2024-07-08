@@ -68,6 +68,7 @@ struct LandingView: View {
             }
             
         }.navigationBarBackButtonHidden()
+            .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

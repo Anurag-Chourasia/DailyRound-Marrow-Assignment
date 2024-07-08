@@ -178,9 +178,10 @@ struct LoginView: View {
                 }.ignoresSafeArea(.keyboard)
             }
         }.navigationBarBackButtonHidden()
+            .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
 #Preview {
-    LoginView( isLoggedIn: .constant(false))
+    LoginView(isLoggedIn: .constant(false))
 }

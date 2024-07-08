@@ -313,6 +313,7 @@ struct DashboardView: View {
                 }
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         
     }
     

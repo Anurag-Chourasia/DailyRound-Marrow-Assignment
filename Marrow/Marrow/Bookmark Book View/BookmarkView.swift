@@ -58,7 +58,7 @@ struct BookmarkView: View {
                 bookmarkBooks = persistenceController.fetchBooks()
             }
         }.navigationBarBackButtonHidden()
-        
+            .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

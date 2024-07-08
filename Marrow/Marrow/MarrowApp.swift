@@ -18,13 +18,16 @@ struct MarrowApp: App {
                 if fetchUser.isSuccessfullyLoggedIn{
                     ContentView(isLoggedIn: true)
                         .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                        .navigationViewStyle(StackNavigationViewStyle())
                 }else{
                     ContentView(isLoggedIn: false)
                         .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                        .navigationViewStyle(StackNavigationViewStyle())
                 }
             }else{
                 ContentView(isLoggedIn: false)
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .navigationViewStyle(StackNavigationViewStyle())
             }
             
         }

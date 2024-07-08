@@ -241,6 +241,7 @@ struct SignUpView: View {
             }
             
         }.navigationBarBackButtonHidden()
+            .navigationViewStyle(StackNavigationViewStyle())
             .onAppear {
                 
                 isLoading = true
