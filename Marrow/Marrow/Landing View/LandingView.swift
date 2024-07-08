@@ -19,9 +19,10 @@ struct LandingView: View {
             VStack(spacing: 0) {
                 
                 HStack(spacing: 0) {
+                    Spacer()
                     Text("MedBook")
                         .font(.largeTitle)
-                        .padding(.leading, 30)
+//                        .padding(.leading, 30)
                     Spacer()
                 }
                 

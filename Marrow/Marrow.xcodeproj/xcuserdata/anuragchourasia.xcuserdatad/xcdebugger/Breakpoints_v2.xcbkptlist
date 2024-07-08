@@ -128,13 +128,43 @@
             endingLineNumber = "361"
             landmarkName = "fetchBooks(title:offset:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "73A814E8-1C28-4988-9801-DB83F44BF5DB - 1707436b1171b93d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;Marrow.Book&gt;, Swift.Error&gt;) -&gt; () in Marrow.DashboardView.fetchBooks(title: Swift.String, offset: Swift.Int) -&gt; ()"
+                  moduleName = "Marrow"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragchourasia/Desktop/Home%20Inventory/Git%20assignment/DailyRound-Marrow-Assignment/Marrow/Marrow/Dashboard%20View/DashboardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "357"
+                  endingLineNumber = "357">
+               </Location>
+               <Location
+                  uuid = "73A814E8-1C28-4988-9801-DB83F44BF5DB - 1707436b1171b8b9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;Marrow.Book&gt;, Swift.Error&gt;) -&gt; () in Marrow.DashboardView.fetchBooks(title: Swift.String, offset: Swift.Int) -&gt; ()"
+                  moduleName = "Marrow"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragchourasia/Desktop/Home%20Inventory/Git%20assignment/DailyRound-Marrow-Assignment/Marrow/Marrow/Dashboard%20View/DashboardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "361"
+                  endingLineNumber = "361">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "747482E7-B347-4EFC-9318-2B895E37F957"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Marrow/Dashboard View/DashboardView.swift"
@@ -144,6 +174,36 @@
             endingLineNumber = "339"
             landmarkName = "fetchBooks(title:offset:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "747482E7-B347-4EFC-9318-2B895E37F957 - 1707436b1171bc24"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;Marrow.Book&gt;, Swift.Error&gt;) -&gt; () in Marrow.DashboardView.fetchBooks(title: Swift.String, offset: Swift.Int) -&gt; ()"
+                  moduleName = "Marrow"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragchourasia/Desktop/Home%20Inventory/Git%20assignment/DailyRound-Marrow-Assignment/Marrow/Marrow/Dashboard%20View/DashboardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "334"
+                  endingLineNumber = "334">
+               </Location>
+               <Location
+                  uuid = "747482E7-B347-4EFC-9318-2B895E37F957 - 1707436b1171bb83"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;Marrow.Book&gt;, Swift.Error&gt;) -&gt; () in Marrow.DashboardView.fetchBooks(title: Swift.String, offset: Swift.Int) -&gt; ()"
+                  moduleName = "Marrow"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragchourasia/Desktop/Home%20Inventory/Git%20assignment/DailyRound-Marrow-Assignment/Marrow/Marrow/Dashboard%20View/DashboardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "339"
+                  endingLineNumber = "339">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
