@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import UIKit
 
 class PersistenceController {
     static let shared = PersistenceController()
@@ -231,7 +232,7 @@ class PersistenceController {
     }
     
 
-    func saveBook(_ book: Book) {
+    func saveBook(_ book: Book,imageData : Data?) {
         let context = container.viewContext
         let userEmail = UserDefaults.standard.value(forKey: "LoggedInUserEmail") as? String ?? ""
         
@@ -261,6 +262,8 @@ class PersistenceController {
                 bookEntity.authorNames = authorNames as NSObject
             }
             
+            bookEntity.image = imageData
+            
             try context.save()
             // Notify the view of the update
             updateBooks(fetchBooks())
@@ -271,11 +274,11 @@ class PersistenceController {
 
     func fetchBooks() -> [Book] {
         let userEmail = UserDefaults.standard.value(forKey: "LoggedInUserEmail") as? String ?? ""
-        
+
         let context = container.viewContext
         let fetchRequest: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "email == %@", userEmail)
-        
+
         do {
             let bookEntities = try context.fetch(fetchRequest)
             let books = bookEntities.compactMap { bookEntity in
@@ -284,7 +287,8 @@ class PersistenceController {
                     ratingsAverage: bookEntity.ratingsAverage,
                     ratingsCount: Int(bookEntity.ratingsCount),
                     authorName: bookEntity.authorNames as? [String],
-                    coverI: Int(bookEntity.coverI)
+                    coverI: Int(bookEntity.coverI),
+                    image: bookEntity.image
                 )
             }
             return books

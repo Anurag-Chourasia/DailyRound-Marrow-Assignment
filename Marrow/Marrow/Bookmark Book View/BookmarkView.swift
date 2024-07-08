@@ -14,6 +14,8 @@ struct BookmarkView: View {
 
     @Environment (\.presentationMode) var presentationMode
     @State var bookmarkBooks : [Book] = []
+    @State private var errorMessage: String = ""
+    @State private var showAlert = false
     var body: some View {
         VStack(spacing:0){
             HStack(spacing:0){
@@ -45,7 +47,8 @@ struct BookmarkView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 0){
                     ForEach(bookmarkBooks) { book in
-                        BookItem(item: book)
+                        BookItem(item: book,
+                                 fromBookMark: true)
                             .padding(.vertical,5)
                     }
                 }
@@ -53,12 +56,24 @@ struct BookmarkView: View {
             }
             .onAppear{
                 bookmarkBooks = persistenceController.fetchBooks()
+                if bookmarkBooks.count == 0{
+                    showAlert = true
+                    errorMessage = "No record found"
+                }
             }
             .onChange(of: bookmarkBooks){_ in
                 bookmarkBooks = persistenceController.fetchBooks()
             }
         }.navigationBarBackButtonHidden()
             .navigationViewStyle(StackNavigationViewStyle())
+            .alert(isPresented: $showAlert) {
+                                    Alert(title: Text("Error"),
+                                          message: Text("\(errorMessage)"),
+                                          dismissButton: .default(Text("OK"),
+                                                                  action: {
+                                        presentationMode.wrappedValue.dismiss()
+                                    }))
+                                }
     }
 }
 

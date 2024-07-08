@@ -11,13 +11,19 @@ struct BookmarkButton: View {
     @Binding var isBookmarked: Bool
     @Environment(\.managedObjectContext) private var viewContext
     let persistenceController = PersistenceController.shared
+    var imageUrl: URL?
     @State var book : Book
     
     var body: some View {
         Button(action: {
             isBookmarked.toggle()
             if isBookmarked{
-                persistenceController.saveBook(book)
+                if let imageURL = imageUrl {
+                    downloadImage(from: imageURL) { imageData in
+                        persistenceController.saveBook(book,
+                                                       imageData: imageData)
+                    }
+                }
             }else{
                 persistenceController.deleteBook(book)
             }
@@ -43,5 +49,15 @@ struct BookmarkButton: View {
                 print("Error2")
             }
         }
+    }
+    // Helper function to download image data from URL
+    private func downloadImage(from url: URL, completion: @escaping (Data?) -> Void) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data else {
+                completion(nil)
+                return
+            }
+            completion(data)
+        }.resume()
     }
 }

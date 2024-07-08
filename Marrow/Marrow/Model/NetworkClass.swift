@@ -11,26 +11,26 @@ import Combine
 // MARK: - NetworkClass
 class NetworkClass: ObservableObject {
     
-    func fetchCountries(completion: @escaping (CountryModel?) -> Void) {
+    func fetchCountries(completion: @escaping (CountryModel?,Error?) -> Void) {
         guard let url = URL(string: "https://api.first.org/data/v1/countries") else {
             print("Invalid URL")
-            completion(nil) // Return an empty dictionary in case of error
+            completion(nil,NSError(domain: "URLCreationError", code: 0, userInfo: [NSLocalizedDescriptionKey : "Invalid URL"])) // Return an empty dictionary in case of error
             return
         }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else {
                 print("Failed to fetch data: \(error?.localizedDescription ?? "Unknown error")")
-                completion(nil) // Return an empty dictionary in case of error
+                completion(nil,NSError(domain: "DataError", code: 0, userInfo: [NSLocalizedDescriptionKey : "No data received"])) // Return an empty dictionary in case of error
                 return
             }
             do {
                 let decoder = JSONDecoder()
                 let jsonResponse = try decoder.decode(CountryModel.self, from: data)
-                completion(jsonResponse)
+                completion(jsonResponse,nil)
             } catch {
                 print("Failed to decode JSON: \(error.localizedDescription)")
-                completion(nil) // Return an empty dictionary in case of error
+                completion(nil,error) // Return an empty dictionary in case of error
             }
         }
         

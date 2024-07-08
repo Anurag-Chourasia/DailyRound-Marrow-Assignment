@@ -63,7 +63,7 @@ struct DashboardView: View {
                             
                             Spacer()
                             
-                            NavigationLink(destination: BookmarkView()){                         
+                            NavigationLink(destination: BookmarkView()){
                                 Image(systemName: "bookmark.circle.fill")
                                     .renderingMode(.template)
                                     .resizable()
@@ -74,7 +74,7 @@ struct DashboardView: View {
                             .padding(.trailing,30)
                             
                             Button(action: {
-    
+                                
                                 isLoading = true
                                 logOutAlert = true
                             }) {
@@ -306,6 +306,11 @@ struct DashboardView: View {
                 }
             }
         }
+        .alert(isPresented: $showAlert) {
+                                Alert(title: Text("Error"),
+                                      message: Text("\(errorMessage)"),
+                                      dismissButton: .default(Text("OK")))
+                            }
         .navigationViewStyle(StackNavigationViewStyle())
         
     }
@@ -334,12 +339,23 @@ struct DashboardView: View {
                     if newBooks.count != 10{
                         loadingMoreBookNotPossible = true
                     }
+                    
                     if offset == 0 {
                         books = newBooks
                     } else {
                         books.append(contentsOf: newBooks)
                         isLoadingMore = false
                     }
+                    if books.count == 0{
+                        errorMessage = "No Book Found"
+                       
+                        isBookLoading = false
+                        isLoadingMore = false
+                        print(showAlert)
+                        showAlert = true
+                    }
+                    
+                    
                     isBookLoading = false
                 case .failure(let error):
                     errorMessage = "Error fetching books: \(error.localizedDescription)"
@@ -369,7 +385,7 @@ struct DashboardView: View {
     
     private func loadMoreBooks() {
         isLoadingMore = true
-        offset += 10 
+        offset += 10
         fetchBooks(title: searchBook.lowercased(), offset: offset)
     }
     
@@ -399,9 +415,7 @@ struct TextFieldWithDebounce : View {
     @StateObject private var textObserver = TextFieldObserver()
     
     var body: some View {
-    
         VStack {
-                
             TextField("", text: $textObserver.searchText)
                 .padding(.trailing, 21)
                 .placeholder(when: textObserver.searchText.isEmpty) {

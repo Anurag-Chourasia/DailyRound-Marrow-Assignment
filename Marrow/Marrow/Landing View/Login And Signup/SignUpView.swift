@@ -269,39 +269,46 @@ struct SignUpView: View {
                     
                     print("No CountryModel found in Core Data")
 
-                    api.fetchCountries { fetchedCountries in
-                        
-                        DispatchQueue.main.async {
-                            
-                            self.countries = fetchedCountries?.data.map { $0.value.country }.sorted() ?? []
-
-                            api.fetchIPDetails { (response, error) in
-                                if let error = error {
-                                    // Handle error
-                                    print("Error fetching IP details: \(error.localizedDescription)")
-                                    isLoading = false
-                                    errorMessage = "Error fetching IP details: \(error.localizedDescription)"
-                                    showAlert = true
-                                    
-                                } else if let response = response {
-                                    
-                                    self.selectedCountryIndex = self.countries.firstIndex(of: response.country) ?? 0
-                                    
-                                    
-                                    if let countryModel = fetchedCountries{
-                                        persistenceController.saveCountryModel(countryModel)
-                                        if !countries.isEmpty{
-                                            let name = countries[selectedCountryIndex]
-                                            persistenceController.saveDefaultCountryName(selectedCountryName: name)
+                    api.fetchCountries { fetchedCountries,error  in
+                        if error == nil{
+                            DispatchQueue.main.async {
+                                
+                                self.countries = fetchedCountries?.data.map { $0.value.country }.sorted() ?? []
+                                
+                                api.fetchIPDetails { (response, error) in
+                                    if let error = error {
+                                        // Handle error
+                                        print("Error fetching IP details: \(error.localizedDescription)")
+                                        isLoading = false
+                                        errorMessage = "Error fetching IP details: \(error.localizedDescription)"
+                                        showAlert = true
+                                        
+                                    } else if let response = response {
+                                        
+                                        self.selectedCountryIndex = self.countries.firstIndex(of: response.country) ?? 0
+                                        
+                                        
+                                        if let countryModel = fetchedCountries{
+                                            persistenceController.saveCountryModel(countryModel)
+                                            if !countries.isEmpty{
+                                                let name = countries[selectedCountryIndex]
+                                                persistenceController.saveDefaultCountryName(selectedCountryName: name)
+                                            }
+                                            
                                         }
-                                       
+                                        isLoading = false
+                                    } else {
+                                        print("Unexpected nil response and error")
+                                        errorMessage = "Unexpected nil response and error"
+                                        showAlert = true
+                                        isLoading = false
                                     }
-                                    isLoading = false
-                                } else {
-                                    print("Unexpected nil response and error")
-                                    isLoading = false
                                 }
                             }
+                        }else{
+                            errorMessage = error?.localizedDescription ?? "error"
+                            showAlert = true
+                            isLoading = false
                         }
                     }
                 }

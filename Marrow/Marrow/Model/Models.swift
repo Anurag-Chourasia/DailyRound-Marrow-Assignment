@@ -79,6 +79,7 @@ struct Book: Identifiable, Codable, Equatable, Hashable {
     let ratingsCount: Int?
     let authorName: [String]?
     let coverI: Int?
+    let image: Data?
     
     enum CodingKeys: String, CodingKey {
         case title
@@ -86,6 +87,7 @@ struct Book: Identifiable, Codable, Equatable, Hashable {
         case ratingsCount = "ratings_count"
         case authorName = "author_name"
         case coverI = "cover_i"
+        case image
     }
     
     // Implementing Hashable conformance
@@ -95,15 +97,14 @@ struct Book: Identifiable, Codable, Equatable, Hashable {
     
     static func == (lhs: Book, rhs: Book) -> Bool {
         return lhs.id == rhs.id &&
-            lhs.title == rhs.title &&
-            lhs.ratingsAverage == rhs.ratingsAverage &&
-            lhs.ratingsCount == rhs.ratingsCount &&
-            lhs.authorName == rhs.authorName &&
-            lhs.coverI == rhs.coverI
+        lhs.title == rhs.title &&
+        lhs.ratingsAverage == rhs.ratingsAverage &&
+        lhs.ratingsCount == rhs.ratingsCount &&
+        lhs.authorName == rhs.authorName &&
+        lhs.coverI == rhs.coverI &&
+        lhs.image == rhs.image
     }
 }
-
-
 
 // MARK: - BooksResponse
 struct BooksResponse: Codable {

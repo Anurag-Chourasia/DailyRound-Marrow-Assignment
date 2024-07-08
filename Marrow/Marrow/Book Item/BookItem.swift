@@ -16,47 +16,80 @@ struct BookItem: View {
     @State private var authorNames : String = ""
     @State private var isBookmarked: Bool = false // State to track bookmark status
     @State private var showBookmarkButton: Bool = false // State to control bookmark button visibility
+    @State var fromBookMark : Bool = false
     var body: some View {
         HStack(spacing: 0){
             HStack(spacing: 0){
                 
                 VStack(alignment: .center,spacing:0){
-                    let coverI = item.coverI ?? 0
-                    let urlString = "https://covers.openlibrary.org/b/id/\(coverI)-M.jpg"
-                    let url = URL(string: urlString)
                     ZStack {
-                        KFImage.url(url)
-                            .loadDiskFileSynchronously()
-                            .cacheMemoryOnly()
-                            .fade(duration: 0.25)
-                            .onProgress { receivedSize, totalSize in
-                                self.isLoading = true
-                            }
-                            .onSuccess { result in
-                                let imageSize = result.image.size
-                                if imageSize.width == 0 && imageSize.height == 0 {
-                                    self.isLoading = true
-                                } else {
-                                    if imageSize.width >= 100 && imageSize.height >= 100{
+                        if fromBookMark{
+                            if let imageData = item.image, let uiImage = UIImage(data: imageData) {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: (100/5)*3,height: 100)
+                                    .clipped()
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 5) // Circle shape for border
+                                            .stroke(Color(UIColor(hex: "#22B6CA")), lineWidth: 1)
+                                            .frame(width: (100/5)*3,height: 100)
+                                    )
+                                    .onAppear{
                                         self.isLoading = false
-                                    }else{
+                                    }
+                            }else{
+                                RoundedRectangle(cornerRadius: 5)
+                                    .foregroundColor(.white)
+                                    .frame(width: (100/5)*3,height: 100)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 5) // Circle shape for border
+                                            .stroke(Color(UIColor(hex: "#22B6CA")), lineWidth: 1)
+                                            .frame(width: (100/5)*3,height: 100)
+                                    )
+                                    .onAppear{
                                         self.isLoading = true
                                     }
+                            }
+                        }else{
+                            let coverI = item.coverI ?? 0
+                            let urlString = "https://covers.openlibrary.org/b/id/\(coverI)-M.jpg"
+                            let url = URL(string: urlString)
+                            
+                            KFImage.url(url)
+                                .loadDiskFileSynchronously()
+                                .cacheMemoryOnly()
+                                .fade(duration: 0.25)
+                                .onProgress { receivedSize, totalSize in
+                                    self.isLoading = true
                                 }
-                            }
-                            .onFailure { error in
-                                self.isLoading = false
-                            }
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: (100/5)*3,height: 100)
-                            .clipped()
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5) // Circle shape for border
-                                    .stroke(Color(UIColor(hex: "#22B6CA")), lineWidth: 1)
-                                    .frame(width: (100/5)*3,height: 100)
-                            )
+                                .onSuccess { result in
+                                    let imageSize = result.image.size
+                                    if imageSize.width == 0 && imageSize.height == 0 {
+                                        self.isLoading = true
+                                    } else {
+                                        if imageSize.width >= 100 && imageSize.height >= 100{
+                                            self.isLoading = false
+                                        }else{
+                                            self.isLoading = true
+                                        }
+                                    }
+                                }
+                                .onFailure { error in
+                                    self.isLoading = true
+                                }
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: (100/5)*3,height: 100)
+                                .clipped()
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5) // Circle shape for border
+                                        .stroke(Color(UIColor(hex: "#22B6CA")), lineWidth: 1)
+                                        .frame(width: (100/5)*3,height: 100)
+                                )
+                        }
                         
                         if isLoading {
                             ProgressView()
@@ -171,7 +204,10 @@ struct BookItem: View {
 
             
             if showBookmarkButton {
+                let coverI = item.coverI ?? 0
+                let urlString = URL(string: "https://covers.openlibrary.org/b/id/\(coverI)-M.jpg")
                 BookmarkButton(isBookmarked: $isBookmarked,
+                               imageUrl: urlString, 
                                book: item)
                     .padding(.trailing, 10)
                     .transition(.move(edge: .trailing))
@@ -193,4 +229,3 @@ struct BookItem: View {
         }
     }
 }
-
